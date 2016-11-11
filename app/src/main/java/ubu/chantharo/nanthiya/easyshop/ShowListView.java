@@ -1,12 +1,14 @@
 package ubu.chantharo.nanthiya.easyshop;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -157,6 +159,22 @@ public class ShowListView extends AppCompatActivity {
                 MyAdapter myAdapter = new MyAdapter(context, nameStrings,
                         detailStrings, phoneStrings,iconStrings);
                 listView.setAdapter(myAdapter);
+
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                        Intent intent = new Intent(ShowListView.this, DetailActivity.class);
+                        intent.putExtra("Name", nameStrings[i]);
+                        intent.putExtra("Detail", detailStrings[i]);
+                        intent.putExtra("Phone", phoneStrings[i]);
+                        intent.putExtra("Image", iconStrings[i]);
+                        intent.putExtra("Lat", latStrings[i]);
+                        intent.putExtra("Lng", lngStrings[i]);
+                        startActivity(intent);
+
+                    }
+                });
 
 
             }catch (Exception e){

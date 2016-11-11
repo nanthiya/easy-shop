@@ -3,4 +3,5 @@
     <string name="cat1">ซ่อมบำรุง</string>
     <string name="cat2">ล้าง-อัดฉีด</string>
     <string name="cat3">ต่อ พ.ร.บ.</string>
+    <string name="title_activity_detail">Map</string>
 </resources>
