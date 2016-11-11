@@ -11,6 +11,12 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.squareup.okhttp.FormEncodingBuilder;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
+
 public class ShowListView extends AppCompatActivity {
 
     //Explicit
@@ -78,12 +84,31 @@ public class ShowListView extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... strings) {
-            return null;
+
+            try {
+                OkHttpClient okHttpClient = new OkHttpClient();
+                RequestBody requestBody = new FormEncodingBuilder()
+                        .add("isAdd", "true")
+                        .add("Catagory", Integer.toString(anInt))
+                        .build();
+                Request.Builder builder = new Request.Builder();
+                Request request = builder.url(strings[0]).post(requestBody).build();
+                Response response = okHttpClient.newCall(request).execute();
+                return response.body().string();
+
+            } catch (Exception e) {
+                Log.d("11novV1", "e doIn ==>" + e.toString());
+                return null;
+            }
+
         }//doInBack
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+
+            Log.d("11novV1", "JSON ===>" + s);
+
         }//onPost
 
     }//SynShop Class

@@ -8,7 +8,7 @@
         android:layout_width="@dimen/icon"
         android:layout_height="@dimen/icon"
 
-        android:id="@+id/imageView4"
+        android:id="@+id/imvIcon"
         android:layout_margin="15dp" />
 
     <LinearLayout
