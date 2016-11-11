@@ -17,6 +17,9 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 public class ShowListView extends AppCompatActivity {
 
     //Explicit
@@ -77,6 +80,19 @@ public class ShowListView extends AppCompatActivity {
 
         //Explicit
         private Context context;
+        private String[] columnStrings = new String[]{
+                "id",
+                "Name",
+                "Detail",
+                "Phone",
+                "Image",
+                "Category",
+                "Lat",
+                "Lng"};
+
+        private String[] nameStrings, detailStrings,
+                phoneStrings, iconStrings,
+                categoryStrings, latStrings, lngStrings ;
 
         public SynShop(Context context) {
             this.context = context;
@@ -89,7 +105,7 @@ public class ShowListView extends AppCompatActivity {
                 OkHttpClient okHttpClient = new OkHttpClient();
                 RequestBody requestBody = new FormEncodingBuilder()
                         .add("isAdd", "true")
-                        .add("Catagory", Integer.toString(anInt))
+                        .add("Category", Integer.toString(anInt))
                         .build();
                 Request.Builder builder = new Request.Builder();
                 Request request = builder.url(strings[0]).post(requestBody).build();
@@ -108,6 +124,45 @@ public class ShowListView extends AppCompatActivity {
             super.onPostExecute(s);
 
             Log.d("11novV1", "JSON ===>" + s);
+
+            try{
+
+                JSONArray jsonArray = new JSONArray(s);
+
+                nameStrings = new String[jsonArray.length()];
+                detailStrings = new String[jsonArray.length()];
+                phoneStrings = new String[jsonArray.length()];
+                iconStrings = new String[jsonArray.length()];
+                categoryStrings = new String[jsonArray.length()];
+                latStrings = new String[jsonArray.length()];
+                lngStrings = new String[jsonArray.length()];
+
+                for (int i=0;i<jsonArray.length();i++){
+
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                    nameStrings[i] = jsonObject.getString(columnStrings[1]);
+                    detailStrings[i] = jsonObject.getString(columnStrings[2]);
+                    phoneStrings[i] = jsonObject.getString(columnStrings[3]);
+                    iconStrings[i] = jsonObject.getString(columnStrings[4]);
+                    categoryStrings[i] = jsonObject.getString(columnStrings[5]);
+                    latStrings[i] = jsonObject.getString(columnStrings[6]);
+                    lngStrings[i] = jsonObject.getString(columnStrings[7]);
+
+                    //Show
+
+                }//for
+
+                //Create ListView
+                MyAdapter myAdapter = new MyAdapter(context, nameStrings,
+                        detailStrings, phoneStrings,iconStrings);
+                listView.setAdapter(myAdapter);
+
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
 
         }//onPost
 
